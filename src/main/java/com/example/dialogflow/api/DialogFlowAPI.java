@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.dialogflow.beans.FulfillmentRequest;
 import com.example.dialogflow.beans.FulfillmentResponse;
 import com.example.dialogflow.beans.QuesAns;
+import com.example.dialogflow.beans.RetResponse;
 import com.example.dialogflow.service.TempQuesAns;
 
 @RestController
@@ -48,10 +49,12 @@ public class DialogFlowAPI {
 	
 	@GetMapping("/getAllQuestions")
 	@ResponseBody
-	public ResponseEntity<List<QuesAns>> getAllQuestions() {
+	public ResponseEntity<RetResponse> getAllQuestions() {
 		System.out.println("inside get all questions");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type","application/json");
-		return new ResponseEntity<List<QuesAns>>(temp.getALLQuestion(), headers, HttpStatus.OK);
+		RetResponse response = new RetResponse();
+		response.setResponse(temp.getALLQuestion());
+		return new ResponseEntity<RetResponse>(response, headers, HttpStatus.OK);
 	}
 }
