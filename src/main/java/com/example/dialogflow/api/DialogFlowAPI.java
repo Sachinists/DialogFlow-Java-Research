@@ -1,5 +1,8 @@
 package com.example.dialogflow.api;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dialogflow.beans.FulfillmentRequest;
 import com.example.dialogflow.beans.FulfillmentResponse;
+import com.example.dialogflow.beans.QuesAns;
+import com.example.dialogflow.service.TempQuesAns;
 
 @RestController
 public class DialogFlowAPI {
+	
+	@Autowired
+	private TempQuesAns temp;
 
 	@GetMapping("/checkStatus")
 	public String helloWorld() {
@@ -36,5 +44,14 @@ public class DialogFlowAPI {
 		FulfillmentResponse fulfillmentResponse = new FulfillmentResponse();
 		fulfillmentResponse.setFulfillmentText("Fulfillment set succesfully");
 		return new ResponseEntity<FulfillmentResponse>(fulfillmentResponse, headers, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getAllQuestions")
+	@ResponseBody
+	public ResponseEntity<List<QuesAns>> getAllQuestions() {
+		System.out.println("inside get all questions");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type","application/json");
+		return new ResponseEntity<List<QuesAns>>(temp.getALLQuestion(), headers, HttpStatus.OK);
 	}
 }
