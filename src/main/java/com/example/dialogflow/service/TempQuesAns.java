@@ -21,7 +21,7 @@ public class TempQuesAns {
 		two.add("Slice");
 		two.add("Burn");
 		two.add("Choke");
-		QuesAns q2 = new QuesAns("What does the Sectumsempra do to an opponent?",two,"It's slices and maims the target as if they are being cut by an invisible sword");
+		QuesAns q2 = new QuesAns("What does the Sectumsempra do to an opponent?",two,"Slice");
 //		QuesAns q3 = new QuesAns();
 //		QuesAns q4 = new QuesAns();
 //		QuesAns q5 = new QuesAns();
