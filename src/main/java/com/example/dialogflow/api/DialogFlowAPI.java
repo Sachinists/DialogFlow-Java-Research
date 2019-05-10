@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dialogflow.beans.FulfillmentRequest;
 import com.example.dialogflow.beans.FulfillmentResponse;
-import com.example.dialogflow.beans.Policy;
+import com.example.dialogflow.beans.PolicyRet;
 import com.example.dialogflow.beans.RetResponse;
 import com.example.dialogflow.service.PolicyService;
 import com.example.dialogflow.service.TempQuesAns;
@@ -71,10 +71,12 @@ public class DialogFlowAPI {
 	
 	@PostMapping("/getPolicyByID")
 	@ResponseBody
-	public ResponseEntity<Policy> getPolicyByIdDOB(@RequestParam String pid,String dob) {
+	public ResponseEntity<PolicyRet> getPolicyByIdDOB(@RequestParam String pid,String dob) {
 		System.out.println("inside get policy"+pid + dob);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type","application/json");
-		return new ResponseEntity<Policy>(policyService.getPolicyByIdDOB(pid, dob), headers, HttpStatus.OK);
+		PolicyRet ret = new PolicyRet();
+		ret.setResponse(policyService.getPolicyByIdDOB(pid, dob));
+		return new ResponseEntity<PolicyRet>(ret, headers, HttpStatus.OK);
 	}
 }
