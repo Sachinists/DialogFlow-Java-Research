@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dialogflow.beans.FulfillmentRequest;
 import com.example.dialogflow.beans.FulfillmentResponse;
-import com.example.dialogflow.beans.PolicyRet;
-import com.example.dialogflow.beans.RetResponse;
+import com.example.dialogflow.beans.Response;
 import com.example.dialogflow.service.PolicyService;
 import com.example.dialogflow.service.TempQuesAns;
 
@@ -27,6 +26,9 @@ public class DialogFlowAPI {
 	@Autowired
 	private PolicyService policyService;
 
+	@Autowired
+	private Response response;
+	
 	@GetMapping("/checkStatus")
 	public String helloWorld() {
 		return "You have successfully deployed your first Hello World Spring Boot Application";
@@ -52,13 +54,12 @@ public class DialogFlowAPI {
 	
 	@GetMapping("/getAllQuestions")
 	@ResponseBody
-	public ResponseEntity<RetResponse> getAllQuestions() {
+	public ResponseEntity<Object> getAllQuestions() {
 		System.out.println("inside get all questions");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type","application/json");
-		RetResponse response = new RetResponse();
 		response.setResponse(temp.getALLQuestion());
-		return new ResponseEntity<RetResponse>(response, headers, HttpStatus.OK);
+		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getPolicyByID")
@@ -71,12 +72,20 @@ public class DialogFlowAPI {
 	
 	@PostMapping("/getPolicyByID")
 	@ResponseBody
-	public ResponseEntity<PolicyRet> getPolicyByIdDOB(@RequestParam String pid,String dob) {
+	public ResponseEntity<Object> getPolicyByIdDOB(@RequestParam String pid,String dob) {
 		System.out.println("inside get policy"+pid + dob);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type","application/json");
-		PolicyRet ret = new PolicyRet();
-		ret.setResponse(policyService.getPolicyByIdDOB(pid, dob));
-		return new ResponseEntity<PolicyRet>(ret, headers, HttpStatus.OK);
+		response.setResponse(policyService.getPolicyByIdDOB(pid, dob));
+		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getAllPolicy")
+	@ResponseBody
+	public ResponseEntity<Object> getAllPolicy() {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type","application/json");
+		response.setResponse(policyService.getAllPolicy());
+		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 }

@@ -8,7 +8,6 @@ public class Issuer {
 	private long mobileNumber;
 	
 	public Issuer(String name, String dob, String address, long mobileNumber) {
-		super();
 		this.name = name;
 		this.dob = dob;
 		this.address = address;
