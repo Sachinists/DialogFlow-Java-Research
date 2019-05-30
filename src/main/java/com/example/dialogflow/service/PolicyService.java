@@ -43,11 +43,25 @@ public class PolicyService {
 		return null;
 	}
 
+	public List<Policy> getAllSaledPolicy(){
+		List<Policy> list = new ArrayList<>();
+		list.add(policy);
+		list.add(policy2);
+		list.add(policy3);
+		return list;
+	}
+	
 	public List<NewPolicy> getAllPolicy(){
 		List<NewPolicy> list = new ArrayList<>();
 		list.add(one);
 		list.add(two);
 		list.add(three);
 		return list;
+	}
+	
+	public Policy getPolicyById(int pid) {
+		return this.getAllSaledPolicy().parallelStream().filter(p -> {
+				return p.getPolicyAmount() == pid;
+			}).findAny().orElse(null);
 	}
 }

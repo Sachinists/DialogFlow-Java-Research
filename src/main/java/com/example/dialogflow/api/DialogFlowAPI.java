@@ -70,10 +70,9 @@ public class DialogFlowAPI {
 		return new ResponseEntity<String>("You made a GET request, but we were looking for some POST.", headers, HttpStatus.OK);
 	}
 	
-	@PostMapping("/getPolicyByID")
+	@PostMapping("/getPolicyByIDDOB")
 	@ResponseBody
 	public ResponseEntity<Object> getPolicyByIdDOB(@RequestParam String pid,String dob) {
-		System.out.println("inside get policy"+pid + dob);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type","application/json");
 		response.setResponse(policyService.getPolicyByIdDOB(pid, dob));
@@ -88,4 +87,13 @@ public class DialogFlowAPI {
 		response.setResponse(policyService.getAllPolicy());
 		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
+	@PostMapping("/getPolicyByID")
+	@ResponseBody
+	public ResponseEntity<Object> getPolicyById(@RequestParam int pid) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type","application/json");
+		response.setResponse(policyService.getPolicyById(pid));
+		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
+	}
+	
 }
