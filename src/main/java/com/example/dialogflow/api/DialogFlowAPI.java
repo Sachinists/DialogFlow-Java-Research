@@ -96,4 +96,13 @@ public class DialogFlowAPI {
 		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
 	}
 	
+	@PostMapping("/getPoliciesByName")
+	@ResponseBody
+	public ResponseEntity<Object> getPolicyById(@RequestParam String name,String dob) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type","application/json");
+		response.setResponse(policyService.getPoliciesByName(name, dob));
+		return new ResponseEntity<Object>(response, headers, HttpStatus.OK);
+	}
+	
 }

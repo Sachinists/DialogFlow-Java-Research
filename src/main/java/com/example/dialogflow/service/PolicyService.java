@@ -1,8 +1,10 @@
 package com.example.dialogflow.service;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -60,8 +62,22 @@ public class PolicyService {
 	}
 	
 	public Policy getPolicyById(int pid) {
-		return this.getAllSaledPolicy().parallelStream().filter(p -> {
-				return p.getPolicyAmount() == pid;
-			}).findAny().orElse(null);
+		Policy policy = this.getAllSaledPolicy().stream().filter(p ->
+				p.getPolicyNumber() == pid
+			).findAny().orElse(null);
+		return policy;
+	}
+	
+	public List<Policy> getPoliciesByName(String name,String dob) {
+		List<Policy> list = this.getAllSaledPolicy().stream().filter(p -> {
+//			System.out.println(p.getIsserDetails().getName().equalsIgnoreCase(name));
+//			System.err.println(p.getIsserDetails().getDob());
+//			System.out.println(LocalDate.parse(dob,DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+//			System.out.println(p.getIsserDetails().getDob().equals(LocalDate.parse(dob,DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
+					return p.getIsserDetails().getName().equalsIgnoreCase(name) && 
+							p.getIsserDetails().getDob().equals(dob);
+				}
+			).collect(Collectors.toList());
+		return list;
 	}
 }
